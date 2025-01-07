@@ -1,21 +1,41 @@
 import pygame
+import sys
 
 pygame.init()
 
-background_colour = (234, 212, 252)
+# Window
+screen_width = 1280
+screen_height = 960
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Medieval Pygame Pong")
 
-screen = pygame.display.set_mode((800,600))
+# Colours
+white = (255, 255, 255)
+black = (234, 212, 252)
 
-screen = pygame.display.set_caption("Medieval Pygame Pong")
+# ball 
+ball = pygame.Rect(screen_width/2 - 11.25, screen_height/2 - 11.25,22.5,22.5)
 
-pygame.display.flip()
+# Paddle_A
+paddle_A = pygame.Rect(screen_width - 130, screen_height/2 - 75,20,150)
+
+# Paddle_B
+paddle_B = pygame.Rect(screen_width - 1180, screen_height/2 - 75,20,150)
+
 
 # Main Game Loop
 KeepGameRunning = True
-
 while KeepGameRunning:
-    
     for event in pygame.event.get():
-        
         if event.type == pygame.QUIT:
             KeepGameRunning = False 
+            
+    pygame.draw.rect(screen, white, ball)
+    pygame.draw.rect(screen, white, paddle_A)
+    pygame.draw.rect(screen, white, paddle_B)
+    
+    pygame.display.flip()
+    
+pygame.quit()
+sys.exit()
+            
