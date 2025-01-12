@@ -1,8 +1,16 @@
 import pygame
 import sys
+import random
 
 pygame.init()
 
+def ball_reset():
+    global ball_speed_x, ball_speed_y
+    if ball.left <= 0 or ball.right >= screen_width:
+        ball.x = screen_width/2 - 17.5
+        ball.y = screen_height/2
+        ball_speed_x = random.choice([-7,7])
+        ball_speed_y = random.choice([-7,7])
 # window
 screen_width = 1280
 screen_height = 960
@@ -18,7 +26,7 @@ black = (0, 0, 0)
 grey = (191, 191, 191)
 
 # ball 
-ball = pygame.Rect(screen_width/2 - 11.25, screen_height/2 - 17.5,35,35)
+ball = pygame.Rect(screen_width/2 - 17.5, screen_height/2 - 17.5,35,35)
 ball_speed_x = 7
 ball_speed_y = 7
 
@@ -49,28 +57,41 @@ while KeepGameRunning:
             elif event.key == pygame.K_s:
                 paddle_B_speed =5.5
             
+            
+            
+            
+            
     
-    # On-Screen-Objects
+    # on-Screen-Objects
     screen.fill(black)       
     pygame.draw.ellipse(screen, white, ball)
     pygame.draw.rect(screen, white, paddle_A)
     pygame.draw.rect(screen, white, paddle_B)
     
-    # Movements
+    # movements
     ball.x += ball_speed_x 
     ball.y += ball_speed_y
     paddle_A.y += paddle_A_speed
     paddle_B.y += paddle_B_speed
     
-    # Border-Checking
+    # border-Checking
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
-    if ball.left <= 0 or ball.right >= screen_width:
-        ball_speed_x *= -1
     if paddle_A.top <= 0 or paddle_A.bottom >= screen_height:
         paddle_A_speed = 0
     if paddle_B.top <= 0 or paddle_B.bottom >= screen_height:
         paddle_B_speed = 0
+   
+        
+        
+    # paddle-ball-collision
+    if ball.colliderect(paddle_A) or ball.colliderect(paddle_B):
+        ball_speed_x *= -1
+        
+    ball_reset()
+   
+        
+   
    
     pygame.display.update()
     clock.tick(60)
