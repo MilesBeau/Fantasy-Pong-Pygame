@@ -4,6 +4,8 @@ import random
 
 pygame.init()
 
+# Fix Ball Getting Stuck Behind Bar
+
 
     
 def scoring_right():
@@ -99,21 +101,24 @@ while KeepGameRunning:
         paddle_B_speed = 0
     
     # paddle-ball-collision
-    if ball.colliderect(paddle_A) or ball.colliderect(paddle_B):
+    if ball.colliderect(paddle_A):
         ball_speed_x *= -1
+        ball.right = paddle_A.left 
+    
+    if ball.colliderect(paddle_B):
+        ball_speed_x *= -1
+        ball.left = paddle_B.right
         
-    # scoring
+        # scoring
     if ball.left <= 0:
-        score_right += 1
+        score_left += 1
         
     if ball.right >= screen_width:
-        score_left += 1
+        score_right += 1
     
-        
     # function    
     ball_reset()
 
-    
     pygame.display.update()
     clock.tick(60)
 
